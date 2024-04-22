@@ -1,16 +1,17 @@
 -- Add up migration script here
 CREATE TABLE users (
-  id uuid DEFAULT uuid_generate_v4 (),
+  id UUID DEFAULT uuid_generate_v4 (),
   username VARCHAR NOT NULL,
-  email VARCHAR NOT NULL,
+  email VARCHAR UNIQUE,
   password VARCHAR NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE notes (
-  id serial,
-  title VARCHAR NOT NULL,
+  id SERIAL,
+  user_id UUID REFERENCES users (id) ON DELETE CASCADE,
+  title VARCHAR UNIQUE,
   note text NOT NULL,
-  tags integer[],
+  tags INTEGER[],
   PRIMARY KEY (id)
 );

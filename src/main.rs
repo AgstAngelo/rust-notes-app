@@ -18,8 +18,8 @@ async fn main() {
     let app = Router::new().route("/", get(handler));
     let listener = tokio::net::TcpListener::bind(&app_str).await.unwrap();
    
-    let res = sqlx::query("SELECT 1 + 1 as sum").fetch_one(&pool).await.expect("couldn't complete query");
-    let sum: i32 = res.get("sum");
+    let row = sqlx::query("SELECT 1 + 1 as sum").fetch_one(&pool).await.expect("couldn't complete query");
+    let sum: i32 = row.get("sum");
     println!("1+1={}", sum); 
 
     println!("listening on {}", listener.local_addr().unwrap());
